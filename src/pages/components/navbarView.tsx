@@ -29,6 +29,10 @@ export default function Navbar() {
         <div>
           <Link href="/inscriptionView">Créer un compte</Link>
         </div>
+        <div>
+          <Link href="/test">test</Link>
+        </div>
+        <div><p className="text-red-700">Hello</p></div>
       </div>
     </>
   );
