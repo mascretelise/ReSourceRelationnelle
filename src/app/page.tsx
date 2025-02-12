@@ -1,4 +1,4 @@
-import Navbar from "@/pages/components/navbarView";
+import Navbar from "@/app/components/navbarView";
 
 
 
