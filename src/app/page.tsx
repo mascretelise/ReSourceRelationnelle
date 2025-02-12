@@ -1,5 +1,6 @@
-import Navbar from "@/pages/components/navbarView"
+import Navbar from './components/navbarView';
 import '@/app/styles/globals.css'
+import Test from "@/app/test";
 
 
 
@@ -7,6 +8,7 @@ export default function Home() {
   return (
     <>
     <Navbar />
+    <Test />
     </>
 
   );
