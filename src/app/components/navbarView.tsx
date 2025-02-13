@@ -27,7 +27,7 @@ export default function Navbar() {
           <p>Mon compte</p>
         </div>
         <div>
-          <Link href="/inscriptionView">Créer un compte</Link>
+          <Link href="/connexionView">Créer un compte</Link>
         </div>
         <div>
           <Link href="/test">test</Link>

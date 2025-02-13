@@ -79,16 +79,16 @@ export default function InscriptionController() {
   };
   
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
-      <form className="flex flex-col border border-black rounded-lg size-80 items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-        <div className="p-0">
+    <div className="flex justify-center items-center w-full min-h-screen bg-cyan-100">
+      <form className="flex flex-col border border-gray-500 rounded-xl size-80 justify-center bg-amber-50" onSubmit={handleSubmit(onSubmit)}>
+        <div className="px-10 place-content-start flex-col">
           <Controller
             name="lastName"
             control={control}
             render={({ field }) => (
-              <div className= "border border-black">
+              <div className= " flex flex-col">
                 <label>Nom</label>
-                <input placeholder="Nom" {...field} className="w-24"/>
+                <input placeholder="Nom" {...field} className="border border-gray-300 w-48"/>
                 {errors.lastName && <p style={{ color: "red" }}>{errors.lastName.message}</p>}
               </div>
             )}
@@ -98,9 +98,9 @@ export default function InscriptionController() {
             name="firstName"
             control={control}
             render={({ field }) => (
-              <div>
+              <div className="flex flex-col">
                 <label>Prénom</label>
-                <input placeholder="Prénom" {...field} className="w-24" />
+                <input placeholder="Prénom" {...field} className="w-48 border border-gray-300" />
                 {errors.firstName && <p style={{ color: "red" }}>{errors.firstName.message}</p>}
               </div>
             )}
@@ -110,9 +110,9 @@ export default function InscriptionController() {
             name="email"
             control={control}
             render={({ field }) => (
-              <div>
+              <div className="flex flex-col">
                 <label>E-mail</label>
-                <input placeholder="E-mail" {...field} className="w-24" />
+                <input placeholder="E-mail" {...field} className="w-48 border border-gray-300" />
                 {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
               </div>
             )}
@@ -122,9 +122,9 @@ export default function InscriptionController() {
             name="mdp"
             control={control}
             render={({ field }) => (
-              <div>
+              <div className="flex flex-col">
                 <label>Mot de passe</label>
-                <input type="password" placeholder="Mot de passe" {...field} className="w-24"/>
+                <input type="password" placeholder="Mot de passe" {...field} className="w-48 border border-gray-300"/>
                 {errors.mdp && <p style={{ color: "red" }}>{errors.mdp.message}</p>}
               </div>
             )}
@@ -133,15 +133,16 @@ export default function InscriptionController() {
             name="mdpConfirm"
             control={control}
             render={({ field }) => (
-              <div>
-                <input type="password" placeholder="Mot de passe" {...field} className="w-24"/>
+              <div className="flex flex-col">
+                <label>Confirmation du mot de passe</label>
+                <input type="password" placeholder="Mot de passe" {...field} className="w-48 border border-gray-300"/>
                 {errors.mdp && <p style={{ color: "red" }}>{errors.mdp.message}</p>}
               </div>
             )}
           />
           
 
-          <button type="submit">Créer le compte</button>
+          <button className="bg-cyan-100 border border-black rounded-md" type="submit">Créer le compte</button>
         </div>
       </form>
     </div>
