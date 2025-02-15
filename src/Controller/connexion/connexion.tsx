@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 
 
@@ -47,6 +48,9 @@ export default function ConnexionController() {
         },
         body: JSON.stringify(data),
       });
+      if(response.ok){
+        window.location.href = "/";
+      }
   
       if (!response.ok) {
         throw new Error("Erreur lors de la connexion");

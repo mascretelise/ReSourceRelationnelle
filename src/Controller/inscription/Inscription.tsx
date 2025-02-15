@@ -17,23 +17,9 @@ const schemaZod = z.object({
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#?!@$%^&*-])/,
       "Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial"
     ),
-   mdpConfirm: z
-    .string()
-    .min(8, "Le mot de passe doit contenir au moins 8 caractères")
-    .regex(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#?!@$%^&*-])/,
-      "Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial"
-    ),
+   
 })
-.refine((data) => data.mdp === data.mdpConfirm, {
-  message: "Les mots de passe ne correspondent pas",
-  path: ["mdpConfirm"],
-})
-;
-const erreurMdp = schemaZod.safeParse({ password: "", confirm: "" });
-if(erreurMdp){
-  <p style={{ color: "red" }}>Les mots de passe sont différents</p>
-}
+
 //Ne me met pas l'erreur sur le champs
 
 
@@ -52,7 +38,7 @@ export default function InscriptionController() {
       firstName: "",
       email: "",
       mdp: "",
-      mdpConfirm: "",
+
     },
     mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant 
   });
@@ -129,17 +115,7 @@ export default function InscriptionController() {
               </div>
             )}
           />
-          <Controller
-            name="mdpConfirm"
-            control={control}
-            render={({ field }) => (
-              <div className="flex flex-col">
-                <label>Confirmation du mot de passe</label>
-                <input type="password" placeholder="Mot de passe" {...field} className="w-48 border border-gray-300"/>
-                {errors.mdp && <p style={{ color: "red" }}>{errors.mdp.message}</p>}
-              </div>
-            )}
-          />
+          
           
 
           <button className="bg-cyan-100 border border-black rounded-md" type="submit">Créer le compte</button>
