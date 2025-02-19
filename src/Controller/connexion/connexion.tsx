@@ -4,12 +4,9 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-
-
 
 const schemaZod = z.object({
-  email: z.string().min(1, "L'email' est obligatoire"),
+  email: z.string().min(1, "L'email est obligatoire"),
   mdp: z
     .string()
     .min(8, "Le mot de passe doit contenir au moins 8 caractères")
@@ -48,10 +45,11 @@ export default function ConnexionController() {
         },
         body: JSON.stringify(data),
       });
+
       if(response.ok){
         window.location.href = "/";
       }
-  
+      
       if (!response.ok) {
         throw new Error("Erreur lors de la connexion");
       }
@@ -64,19 +62,26 @@ export default function ConnexionController() {
   };
   
   return (
-    <div className="flex justify-center items-center w-full min-h-screen bg-cyan-100">
-      <form className="flex flex-col border border-gray-500 rounded-xl size-80 justify-center bg-amber-50" onSubmit={handleSubmit(onSubmit)}>
-        <div className="px-10 place-content-start flex-col">
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Connexion</h2>
+      </div>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm place-self-center">
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        
 
           <Controller
             name="email"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col">
-                <label>E-mail</label>
-                <input placeholder="E-mail" {...field} className="w-48 border border-gray-300" />
-                {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
-              </div>
+               <div className="">
+               <label className="block text-sm/6 font-medium text-gray-900">Email address</label>
+               <div className="mt-2">
+                 <input type="email" id="email" {...field} required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+               </div>
+               {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
+             </div>
+       
             )}
           />
 
@@ -84,17 +89,25 @@ export default function ConnexionController() {
             name="mdp"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col">
-                <label>Mot de passe</label>
-                <input type="password" placeholder="Mot de passe" {...field} className="w-48 border border-gray-300"/>
+              <div className="">
+                <label className="block text-sm/6 font-medium text-gray-900">Password</label>
+                <div className="mt-2">
+                  <input {...field} type="password" name="password" id="password"  required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                </div>
+                <div className="text-sm">
+                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                </div>
                 {errors.mdp && <p style={{ color: "red" }}>{errors.mdp.message}</p>}
               </div>
             )}
           />
-          <button className="bg-cyan-100 border border-black rounded-md" type="submit">Créer le compte</button>
-          <Link href="/inscriptionView">Pas encore de compte : Créez en un ici !</Link>
-        </div>
+          <div className="flex flex-col justify-self-center">
+            <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            type="submit">Se connecter</button>
+          <Link href="/inscriptionView" className="text-blue-500">Pas encore de compte : Créez en un ici !</Link>
+          </div>
       </form>
+      </div>
     </div>
   );
 }

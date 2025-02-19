@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
+
+
+
   return (
     <>
       <div className="w-1440px h-114px bg-cyan-100 border border-black flex items-center justify-between">
@@ -24,15 +27,11 @@ export default function Navbar() {
           <p>Paramètres</p>
         </div>
         <div className="mr-8">
-          <p>Mon compte</p>
+          <Link href="/compte">Mon compte</Link>
         </div>
         <div>
           <Link href="/connexionView">Créer un compte</Link>
         </div>
-        <div>
-          <Link href="/test">test</Link>
-        </div>
-        <div><p className="text-red-700">Hello</p></div>
       </div>
     </>
   );

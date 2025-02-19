@@ -17,10 +17,15 @@ const schemaZod = z.object({
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#?!@$%^&*-])/,
       "Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial"
     ),
-   
+  mdpConfirm: z.string()
+}).refine((data)=>{
+  return data.mdp === data.mdpConfirm
+}, {
+  message: "Passwords don't match",
+    path: ["mdpConfirm"], 
 })
 
-//Ne me met pas l'erreur sur le champs
+
 
 
 type FormData = z.infer<typeof schemaZod>;
@@ -38,7 +43,7 @@ export default function InscriptionController() {
       firstName: "",
       email: "",
       mdp: "",
-
+      mdpConfirm : "",
     },
     mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant 
   });
@@ -52,11 +57,13 @@ export default function InscriptionController() {
         },
         body: JSON.stringify(data),
       });
-  
+      if(response.ok){
+        window.location.href = "/";
+      }
       if (!response.ok) {
         throw new Error("Erreur lors de l'inscription");
       }
-  
+      
       const responseData = await response.json();
       console.log("Réponse de l'API :", responseData);
     } catch (error) {
@@ -65,16 +72,22 @@ export default function InscriptionController() {
   };
   
   return (
-    <div className="flex justify-center items-center w-full min-h-screen bg-cyan-100">
-      <form className="flex flex-col border border-gray-500 rounded-xl size-80 justify-center bg-amber-50" onSubmit={handleSubmit(onSubmit)}>
-        <div className="px-10 place-content-start flex-col">
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Se créer un compte</h2>
+      </div>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm place-self-center">
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        
           <Controller
             name="lastName"
             control={control}
             render={({ field }) => (
-              <div className= " flex flex-col">
-                <label>Nom</label>
-                <input placeholder="Nom" {...field} className="border border-gray-300 w-48"/>
+              <div className= "">
+                <label className="block text-sm/6 font-medium text-gray-900">Nom</label>
+                <div className="mt-2">
+                <input placeholder="Nom" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                </div>
                 {errors.lastName && <p style={{ color: "red" }}>{errors.lastName.message}</p>}
               </div>
             )}
@@ -84,9 +97,11 @@ export default function InscriptionController() {
             name="firstName"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col">
-                <label>Prénom</label>
-                <input placeholder="Prénom" {...field} className="w-48 border border-gray-300" />
+              <div className="">
+                <label className="block text-sm/6 font-medium text-gray-900">Prénom</label>
+                <div className="mt-2">
+                <input placeholder="Prénom" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
                 {errors.firstName && <p style={{ color: "red" }}>{errors.firstName.message}</p>}
               </div>
             )}
@@ -96,9 +111,11 @@ export default function InscriptionController() {
             name="email"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col">
-                <label>E-mail</label>
-                <input placeholder="E-mail" {...field} className="w-48 border border-gray-300" />
+              <div className="">
+                <label className="block text-sm/6 font-medium text-gray-900">E-mail</label>
+                <div className="mt-2">
+                <input placeholder="E-mail" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
                 {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
               </div>
             )}
@@ -108,19 +125,34 @@ export default function InscriptionController() {
             name="mdp"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col">
-                <label>Mot de passe</label>
-                <input type="password" placeholder="Mot de passe" {...field} className="w-48 border border-gray-300"/>
+              <div className="">
+                <label className="block text-sm/6 font-medium text-gray-900">Mot de passe</label>
+                <div className="mt-2">
+                <input type="password" placeholder="Mot de passe" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                </div>
                 {errors.mdp && <p style={{ color: "red" }}>{errors.mdp.message}</p>}
               </div>
             )}
           />
-          
-          
-
-          <button className="bg-cyan-100 border border-black rounded-md" type="submit">Créer le compte</button>
-        </div>
+          <Controller
+            name="mdpConfirm"
+            control={control}
+            render={({ field }) => (
+              <div className="">
+                <label className="block text-sm/6 font-medium text-gray-900">Confirmer le mot de passe</label>
+                <div className="mt-2">
+                <input type="password" placeholder="Mot de passe" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                </div>
+                {errors.mdpConfirm && <p style={{ color: "red" }}>{errors.mdpConfirm.message}</p>}
+              </div>
+            )}
+          />
+          <div className="flex flex-col justify-self-center">
+            <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            type="submit">Créer le compte</button>
+          </div>
       </form>
+      </div>
     </div>
   );
 }
