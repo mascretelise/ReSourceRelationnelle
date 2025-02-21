@@ -4,9 +4,10 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useState } from "react";
 
 const schemaZod = z.object({
-  email: z.string().min(1, "L'email est obligatoire"),
+  email: z.string().min(1, "L'email est obligatoire").email("L'email est invalide"),
   mdp: z
     .string()
     .min(8, "Le mot de passe doit contenir au moins 8 caractères")
@@ -22,10 +23,12 @@ const schemaZod = z.object({
 type FormData = z.infer<typeof schemaZod>;
 
 export default function ConnexionController() {
+  const [serverError, setServerError] = useState("")
   const {
     register,
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schemaZod), 
@@ -37,6 +40,7 @@ export default function ConnexionController() {
   });
 
   const onSubmit = async (data: FormData) => {
+    setServerError("");
     try {
       const response = await fetch("http://localhost:3000/connexion", {
         method: "POST",
@@ -51,7 +55,7 @@ export default function ConnexionController() {
       }
       
       if (!response.ok) {
-        throw new Error("Erreur lors de la connexion");
+        setError("mdp", { type: "manual", message: "Email ou mot de passe incorrect" })
       }
   
       const responseData = await response.json();
