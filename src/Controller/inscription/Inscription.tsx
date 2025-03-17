@@ -50,10 +50,11 @@ export default function InscriptionController() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch("http://localhost:3000/inscription", {
+      const response = await fetch("http://localhost:3000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': "Bearer"
         },
         body: JSON.stringify(data),
       });

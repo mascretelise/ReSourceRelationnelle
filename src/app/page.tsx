@@ -1,14 +1,10 @@
-import Navbar from './components/navbarView';
-import '@/app/styles/globals.css'
-import Test from "@/app/test";
+import Home from "./home"
 
-
-
-export default function Home() {
+export default function Page() {
+  
   return (
     <>
-    <Navbar />
-    <Test />
+      <Home />
     </>
 
   );

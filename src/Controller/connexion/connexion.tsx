@@ -1,10 +1,15 @@
 "use client";
+
 import * as React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation'
+
+
 
 const schemaZod = z.object({
   email: z.string().min(1, "L'email est obligatoire").email("L'email est invalide"),
@@ -24,6 +29,7 @@ type FormData = z.infer<typeof schemaZod>;
 
 export default function ConnexionController() {
   const [serverError, setServerError] = useState("")
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const {
     register,
     handleSubmit,
@@ -39,24 +45,28 @@ export default function ConnexionController() {
     mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant 
   });
 
+  useEffect(() => {}, [cookies])
+    const router = useRouter()
+    const setCookieHandler = () => {
+      setCookie('user', true, {path: "/"})
+      router.replace("/compte");
+    }
+
   const onSubmit = async (data: FormData) => {
     setServerError("");
     try {
-      const response = await fetch("http://localhost:3000/connexion", {
+      const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-
-      if(response.ok){
-        window.location.href = "/";
-      }
-      
-      if (!response.ok) {
+      if(!response.ok){
         setError("mdp", { type: "manual", message: "Email ou mot de passe incorrect" })
       }
+      
   
       const responseData = await response.json();
       console.log("Réponse de l'API :", responseData);
@@ -105,8 +115,9 @@ export default function ConnexionController() {
               </div>
             )}
           />
+          {serverError && <p className="text-red-500">{serverError}</p>}
           <div className="flex flex-col justify-self-center">
-            <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            <button onClick={setCookieHandler} className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="submit">Se connecter</button>
           <Link href="/inscriptionView" className="text-blue-500">Pas encore de compte : Créez en un ici !</Link>
           </div>
