@@ -4,7 +4,7 @@ import * as React from "react";
 export default function  connexionView(){
   return(
     <div>
-    <ConnexionController />
+        <ConnexionController />
     </div>
   )
 }

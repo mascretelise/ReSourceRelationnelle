@@ -1,19 +1,21 @@
 "use client";
 import * as React from "react";
 //import from 'cookies-next';
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useEffect } from "react";
 import {useCookies } from 'react-cookie';
 
 
-export default function CompteController() {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+export default function CompteControllerCitoyen() {
+
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
  useEffect(() => {}, [cookies])
     const router = useRouter()
     const setCookieHandler = () => {
-      removeCookie('user')
-      setCookie("user", false);
-      router.replace("/");
+      removeCookie('token', {path: '/'})
+      //setCookie("user", false);
+      router.replace('/')
     }
 
   return (

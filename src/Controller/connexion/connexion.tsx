@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {useCookies } from 'react-cookie';
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 
 
@@ -44,13 +44,7 @@ export default function ConnexionController() {
     },
     mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant 
   });
-
-  useEffect(() => {}, [cookies])
-    const router = useRouter()
-    const setCookieHandler = () => {
-      setCookie('user', true, {path: "/"})
-      router.replace("/compte");
-    }
+  
 
   const onSubmit = async (data: FormData) => {
     setServerError("");
@@ -63,18 +57,49 @@ export default function ConnexionController() {
         },
         body: JSON.stringify(data),
       });
-      if(!response.ok){
+      const responseData = await response.json();
+      if(response.ok){
+        const param = data.email
+        const statutUser =  await fetch(`http://localhost:3000/api/user/statut?param=${param}`, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })   
+      
+        let statut = await statutUser.json()
+        statut = Object.values(statut)
+        sessionStorage.setItem('email', param);
+        sessionStorage.setItem('statut', statut);
+
+        window.location.href = '/';
+        
+      }else{
         setError("mdp", { type: "manual", message: "Email ou mot de passe incorrect" })
       }
       
-  
-      const responseData = await response.json();
-      console.log("Réponse de l'API :", responseData);
+      
+      
+      
+      //window.location.href = '/compte';
     } catch (error) {
       console.error("Erreur :", error);
     }
+    
   };
-  
+  /*useEffect(() => {}, [cookies])
+  const router = useRouter()
+  const setCookieHandler = async () => {
+    const responseAcces = `http://localhost:3000/api/protectedRoute=${cookies}`;
+    const data = await fetch (responseAcces)
+    if(data.ok){
+      console.log("data ok")
+      redirect("/compte")
+    }
+    
+  }*/
+ 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -117,7 +142,7 @@ export default function ConnexionController() {
           />
           {serverError && <p className="text-red-500">{serverError}</p>}
           <div className="flex flex-col justify-self-center">
-            <button onClick={setCookieHandler} className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            <button  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="submit">Se connecter</button>
           <Link href="/inscriptionView" className="text-blue-500">Pas encore de compte : Créez en un ici !</Link>
           </div>
