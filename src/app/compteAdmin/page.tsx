@@ -1,10 +1,11 @@
-import CompteController from "@/Controller/compteAdmin/compteAdministrateur";
+import CompteControllerAdmin from "@/Controller/compteAdmin/compteAdministrateur";
 import * as React from "react";
 
-export default function compteView() {
+export default function CompteAdmin() {
   return (
     <div>
-      <CompteController />
+      <h1>Hello</h1>
+      <CompteControllerAdmin />
     </div>
   );
 }

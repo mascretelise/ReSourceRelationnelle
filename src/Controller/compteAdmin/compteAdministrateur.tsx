@@ -4,8 +4,8 @@ import * as React from "react";
 import { redirect, useRouter } from 'next/navigation'
 import { useEffect } from "react";
 import {useCookies } from 'react-cookie';
-import getInfos from "../componentsParamètres/viewInfos"
 import Link from "next/link";
+import Navbar from "@/app/components/navbarView";
 
 
 
@@ -19,10 +19,9 @@ export default function CompteControllerAdmin() {
       //setCookie("user", false);
       router.replace('/')
     }
-    const data = getInfos()
-    console.log(data)
   return (
     <div>
+      <Navbar />
         <h1>MON COMPTE Admin</h1> 
         <h3>Mes informations</h3>
         <Link href={"../paramCompte"}>Paramètres</Link>

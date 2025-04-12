@@ -1,10 +1,10 @@
-import CompteController from "@/Controller/compteCitoyen/CompteCitoyen";
+import CompteControllerCitoyen from "@/Controller/compteCitoyen/CompteCitoyen";
 import * as React from "react";
 
-export default function compteView() {
+export default function CompteCitoyen() {
   return (
     <div>
-      <CompteController />
+      <CompteControllerCitoyen />
     </div>
   );
 }

@@ -6,8 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {useCookies } from 'react-cookie';
-import { redirect, useRouter } from 'next/navigation'
+
 
 
 
@@ -29,7 +28,6 @@ type FormData = z.infer<typeof schemaZod>;
 
 export default function ConnexionController() {
   const [serverError, setServerError] = useState("")
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const {
     register,
     handleSubmit,
@@ -58,47 +56,14 @@ export default function ConnexionController() {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      if(response.ok){
-        const param = data.email
-        const statutUser =  await fetch(`http://localhost:3000/api/user/statut?param=${param}`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })   
       
-        let statut = await statutUser.json()
-        statut = Object.values(statut)
-        sessionStorage.setItem('email', param);
-        sessionStorage.setItem('statut', statut);
 
         window.location.href = '/';
-        
-      }else{
-        setError("mdp", { type: "manual", message: "Email ou mot de passe incorrect" })
-      }
-      
-      
-      
-      
-      //window.location.href = '/compte';
     } catch (error) {
       console.error("Erreur :", error);
     }
     
   };
-  /*useEffect(() => {}, [cookies])
-  const router = useRouter()
-  const setCookieHandler = async () => {
-    const responseAcces = `http://localhost:3000/api/protectedRoute=${cookies}`;
-    const data = await fetch (responseAcces)
-    if(data.ok){
-      console.log("data ok")
-      redirect("/compte")
-    }
-    
-  }*/
  
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

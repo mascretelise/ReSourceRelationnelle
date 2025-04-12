@@ -1,44 +1,65 @@
+'use client';
+// import * as React from "react";
+import { useEffect, useState } from "react";
+import { emailUserByToken } from "../componentsConnexion/isLogged";
+import Navbar from "@/app/components/navbarView";
+import ModifInfos from "./formModifInfos";
 
 
-import * as React from "react";
-import { jwtDecode } from "jwt-decode";
-import { cookies } from 'next/headers';
-import {getEmailByToken} from './verifToken'
+export default function ControllerParametres() {
+  const [name, setName] = useState("");
+  const [firstname, setFirstame] = useState("");
+  const [email, setEmail] = useState("");
+  const [form, setForm] = useState(false)
 
-
-export default async function ControllerParametres() {
-        const param = getEmailByToken
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = await emailUserByToken();
+        console.log("email by param : ", email)
         
-        const infos = await fetch(`http://localhost:3000/api/user/infosByEmail?param=${param}`, {
+        const resInfos = await fetch(
+          `http://localhost:3000/api/user/infosByEmail?email=${email}`,
+          {
             method: "GET",
             credentials: "include",
             headers: {
-            "Content-Type": "application/json",
-        }
-        })
-        const informations = await infos.json()
-        console.log(informations)
-        const prenom = informations[0].uti_firstname
-        const email = informations[0].uti_email
-        const nom = informations[0].uti_name
-        function handleClick() {
-            console.log("increment like count")
+              "Content-Type": "application/json",
+            },
           }
-    
+        );
 
-    return(
-        <div>
-            <h1>
-                Bonjour {<p>{prenom}</p>}
-            </h1>
-            <p>Nom : {nom}</p>
-            <p>Prénom : {prenom}</p>
-            <button onClick={handleClick}>Modifier mon prénom</button>
-            <p>Votre email : {email}</p>
-            <p>Mdp : </p>
-        </div>
-    )
+        const infos = await resInfos.json();
+        const prenom = infos[0].uti_firstname
+        const emailUser = infos[0].uti_email
+        const nom = infos[0].uti_name;
+        setName(nom);
+        setFirstame(prenom)
+        setEmail(emailUser)
+      } catch (err) {
+        console.error("Erreur lors de la récupération du statut :", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <div>
+          <Navbar />
+      </div>
+      <div>
+        <p>Nom : {firstname}</p>
+      <p>Prénom : {name}</p>
+
+      <p>Email : {email}</p>
+      <button onClick={() => setForm(!form)} className="bg-amber-600">Modifier mes informations</button>
+      {form && ( <ModifInfos />)}
+      </div>
+      
+    </div>
+  );
 }
 
 //Au click du lien "modifier mon ... ", faire apparaitre un input permettant de modifier l'information
-//Link ? Button ? 
+//Link ? Button ?

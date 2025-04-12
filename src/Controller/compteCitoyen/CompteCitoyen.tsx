@@ -4,6 +4,7 @@ import * as React from "react";
 import { redirect, useRouter } from 'next/navigation'
 import { useEffect } from "react";
 import {useCookies } from 'react-cookie';
+import Navbar from "@/app/components/navbarView";
 
 
 
@@ -20,6 +21,7 @@ export default function CompteControllerCitoyen() {
 
   return (
     <div>
+      <Navbar />
         <h1>MON COMPTE</h1> 
         <button onClick={setCookieHandler}>Se déconnecter</button>   
     </div>

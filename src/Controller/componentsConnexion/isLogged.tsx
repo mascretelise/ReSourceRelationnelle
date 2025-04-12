@@ -1,29 +1,20 @@
-"use client";
-import * as React from "react";
-import type { NextRequest } from 'next/server'
-
-
-
-
-export default async function isLoggedIn(request:NextRequest) {
-
-    const cookie = request.cookies.get("token")?.value;
-    const isLogged = cookie && cookie !== "false" && cookie!= null && cookie!= undefined
-    if(isLogged){
-    const param = cookie
-    console.log(cookie)
-    const statutUser =  await fetch(`http://localhost:3000/api/getStatut?param=${param}`, {
+const emailUserByToken = async () => {
+  try {
+    const resEmail = await fetch(`http://localhost:3000/api/user/emailByToken`, {
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-    })   
-  
-    let statut = await statutUser.json()
-    statut = Object.values(statut)
-    console.log("statut user : ", statut)
-    return statut
+    });
+      const {email}  = await resEmail.json();
+    console.log("email by la fonction", email)
+    return email
+  }
+    catch(err) {
+      console.error("Erreur lors de la récupération du statut :", err);
     }
-
 }
+  
+
+export {emailUserByToken}
