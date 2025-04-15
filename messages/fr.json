@@ -1,0 +1,44 @@
+{
+  "ConnexionPage": {
+    "adresseMail": "Adresse email",
+    "mdp": "Mot de passe",
+    "connexion": "se connecter"
+  },
+
+  "inscriptionPage": {
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "email": "adresse email",
+    "mdp": "Mot de passe",
+    "mdpConfirm": "Confirmer le mot de passe",
+    "creationCompte": "Créer le compte"
+  },
+
+  "navbar": {
+    "parametres": "Paramètres",
+    "monCompte": "Mon Compte",
+    "login/register": "Se connecter/Créer un compte"
+  },
+
+  "paramCompte": {
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "email": "Email address",
+    "btnModifInfos": "Modifier mes informations"
+  },
+
+  "formModifInfos": {
+    "nomDeFamille": "Nom de famille",
+    "prenom": "Prénom",
+    "pseudo": "Pseudonyme",
+    "btnModifInfos": "Edit my informations"
+  },
+
+  "compteAdmin": {
+    "Bonjour": "Bonjour",
+    "compteAdmin": "Compte Administrateur",
+    "mesInformations": "Mes informations",
+    "parametres": "Paramètres",
+    "deconnexion": "Se déconnecter"
+  }
+}

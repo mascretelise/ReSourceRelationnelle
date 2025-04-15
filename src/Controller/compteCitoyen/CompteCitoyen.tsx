@@ -1,29 +1,47 @@
 "use client";
 import * as React from "react";
 //import from 'cookies-next';
-import { redirect, useRouter } from 'next/navigation'
-import { useEffect } from "react";
-import {useCookies } from 'react-cookie';
+import { redirect, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import Link from "next/link";
 import Navbar from "@/app/components/navbarView";
+import { emailUserByToken } from "../componentsConnexion/isLogged";
+import {useTranslations} from 'next-intl';
 
+export default function CompteControllerAdmin() {
+  const t = useTranslations('compteAdmin');
+  const [firstname, setFirstame] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const email = await emailUserByToken();
+      console.log("email by param : ");
 
+      const resInfos = await fetch(
+        `http://localhost:3000/api/user/infosByEmail?email=${email}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-export default function CompteControllerCitoyen() {
+      const infos = await resInfos.json();
+      const prenom = infos[0].uti_firstname;
 
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
- useEffect(() => {}, [cookies])
-    const router = useRouter()
-    const setCookieHandler = () => {
-      removeCookie('token', {path: '/'})
-      //setCookie("user", false);
-      router.replace('/')
-    }
-
+      setFirstame(prenom);
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <Navbar />
-        <h1>MON COMPTE</h1> 
-        <button onClick={setCookieHandler}>Se déconnecter</button>   
+      <h1>{t('Bonjour')} {firstname}</h1>
+      <h3>{t('mesInformations')}</h3>
+      <Link href={"../paramCompte"}>{t('parametres')}</Link>
+      <button>{t('deconnexion')}</button>
     </div>
   );
 }

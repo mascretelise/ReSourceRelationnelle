@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
+import {useTranslations} from 'next-intl';
 
 const schemaZod = z.object({
   lastName: z.string().min(1, "Le nom est obligatoire"),
@@ -16,6 +17,7 @@ const schemaZod = z.object({
 ;
 type FormData = z.infer<typeof schemaZod>;
 export default function ModifInfos() {
+const t = useTranslations('formModifInfos');
 const [serverError, setServerError] = useState("")
   const {
     register,
@@ -51,7 +53,7 @@ const [serverError, setServerError] = useState("")
       const responseData = await response.json();
       console.log("reponse form modif infos : ", responseData)
       if(responseData){
-        alert("Informations modifiées !")
+        window.location.href = '/compte';
       }
     } catch (error) {
       console.error("Erreur :", error);
@@ -66,7 +68,7 @@ const [serverError, setServerError] = useState("")
           control={control}
           render={({ field }) => (
             <div className="">
-              <label className="block text-sm/6 font-medium text-gray-900">Nom de famille</label>
+              <label className="block text-sm/6 font-medium text-gray-900">{t('nomDeFamille')}</label>
               <div className="mt-2">
                 <input {...field} type="text" name="lastName" id="lastName"  required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
               </div>
@@ -80,7 +82,7 @@ const [serverError, setServerError] = useState("")
           control={control}
           render={({ field }) => (
             <div className="">
-              <label className="block text-sm/6 font-medium text-gray-900">Prénom</label>
+              <label className="block text-sm/6 font-medium text-gray-900">{t('prenom')}</label>
               <div className="mt-2">
                 <input {...field} type="text" name="firstName" id="firstName"  required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
               </div>
@@ -94,7 +96,7 @@ const [serverError, setServerError] = useState("")
           control={control}
           render={({ field }) => (
             <div className="">
-              <label className="block text-sm/6 font-medium text-gray-900">Pseudo</label>
+              <label className="block text-sm/6 font-medium text-gray-900">{t('pseudo')}</label>
               <div className="mt-2">
                 <input {...field} type="text" name="pseudo" id="pseudo"  required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
               </div>
@@ -106,7 +108,7 @@ const [serverError, setServerError] = useState("")
 
         <div className="flex flex-col justify-self-center">
           <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          type="submit">Modifier mes informations</button>
+          type="submit">{t('btnModifInfos')}</button>
         </div>
     </form>
     </div>

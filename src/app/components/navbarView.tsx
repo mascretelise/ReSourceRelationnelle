@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {useTranslations} from 'next-intl';
 
 export default function Navbar() {
-
+const t = useTranslations('navbar');
 
 
   return (
@@ -24,13 +25,13 @@ export default function Navbar() {
           <p>Référentiel de ressources</p>
         </div>
         <div>
-          <p>Paramètres</p>
+          <p>{t('parametres')}</p>
         </div>
         <div className="mr-8">
-          <Link href="/compte">Mon compte</Link>
+          <Link href="/compte">{t('monCompte')}</Link>
         </div>
         <div>
-          <Link href="/connexionView">Créer un compte</Link>
+          <Link href="/connexionView">{t('login/register')}</Link>
         </div>
       </div>
     </>

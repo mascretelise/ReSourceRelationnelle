@@ -3,7 +3,7 @@ import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import {useTranslations} from 'next-intl';
 
 
 const schemaZod = z.object({
@@ -31,6 +31,7 @@ const schemaZod = z.object({
 type FormData = z.infer<typeof schemaZod>;
 
 export default function InscriptionController() {
+  const t = useTranslations('inscriptionPage');
   const {
     register,
     handleSubmit,
@@ -75,7 +76,7 @@ export default function InscriptionController() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Se créer un compte</h2>
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">{t('creationCompte')}</h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm place-self-center">
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -85,7 +86,7 @@ export default function InscriptionController() {
             control={control}
             render={({ field }) => (
               <div className= "">
-                <label className="block text-sm/6 font-medium text-gray-900">Nom</label>
+                <label className="block text-sm/6 font-medium text-gray-900">{t('nom')}</label>
                 <div className="mt-2">
                 <input placeholder="Nom" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
@@ -99,7 +100,7 @@ export default function InscriptionController() {
             control={control}
             render={({ field }) => (
               <div className="">
-                <label className="block text-sm/6 font-medium text-gray-900">Prénom</label>
+                <label className="block text-sm/6 font-medium text-gray-900">{t('prenom')}</label>
                 <div className="mt-2">
                 <input placeholder="Prénom" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
@@ -113,7 +114,7 @@ export default function InscriptionController() {
             control={control}
             render={({ field }) => (
               <div className="">
-                <label className="block text-sm/6 font-medium text-gray-900">E-mail</label>
+                <label className="block text-sm/6 font-medium text-gray-900">{t('email')}</label>
                 <div className="mt-2">
                 <input placeholder="E-mail" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
@@ -127,7 +128,7 @@ export default function InscriptionController() {
             control={control}
             render={({ field }) => (
               <div className="">
-                <label className="block text-sm/6 font-medium text-gray-900">Mot de passe</label>
+                <label className="block text-sm/6 font-medium text-gray-900">{t('mdp')}</label>
                 <div className="mt-2">
                 <input type="password" placeholder="Mot de passe" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
@@ -140,7 +141,7 @@ export default function InscriptionController() {
             control={control}
             render={({ field }) => (
               <div className="">
-                <label className="block text-sm/6 font-medium text-gray-900">Confirmer le mot de passe</label>
+                <label className="block text-sm/6 font-medium text-gray-900">{t('mdpConfirm')}</label>
                 <div className="mt-2">
                 <input type="password" placeholder="Mot de passe" {...field} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
                 </div>
@@ -150,7 +151,7 @@ export default function InscriptionController() {
           />
           <div className="flex flex-col justify-self-center">
             <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            type="submit">Créer le compte</button>
+            type="submit">{t('creationCompte')}</button>
           </div>
       </form>
       </div>
