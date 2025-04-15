@@ -1,0 +1,44 @@
+{
+  "ConnexionPage": {
+    "adresseMail": "Email address",
+    "mdp": "Password",
+    "connexion": "Login"
+  },
+
+  "inscriptionPage": {
+    "nom": "LastName",
+    "prenom": "FirstName",
+    "email": "Email address",
+    "mdp": "Password",
+    "mdpConfirm": "Confirm password",
+    "creationCompte": "Create account"
+  },
+
+  "navbar": {
+    "parametres": "Parameters",
+    "monCompte": "My account",
+    "login/register": "Login/Create an account"
+  },
+
+  "paramCompte": {
+    "nom": "LastName",
+    "prenom": "FirstName",
+    "email": "Email address",
+    "btnModifInfos": "Edit my informations"
+  },
+
+  "formModifInfos": {
+    "nomDeFamille": "LastName",
+    "prenom": "FirstName",
+    "pseudo": "Pseudonyme",
+    "btnModifInfos": "Edit my informations"
+  },
+
+  "compteAdmin": {
+    "Bonjour": "Hello",
+    "compteAdmin": "Administrator account",
+    "mesInformations": "My informations",
+    "parametres": "Parameters",
+    "deconnexion": "Sign out"
+  }
+}

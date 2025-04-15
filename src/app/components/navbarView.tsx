@@ -2,7 +2,16 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import {useTranslations} from 'next-intl';
+
 export default function Navbar() {
+const t = useTranslations('navbar');
+
+
+
+
+export default function Navbar() {
+
   return (
     <>
       <div className="w-1440px h-114px bg-cyan-100 border border-black flex items-center justify-between">
@@ -21,6 +30,15 @@ export default function Navbar() {
           <p>Référentiel de ressources</p>
         </div>
         <div>
+
+          <p>{t('parametres')}</p>
+        </div>
+        <div className="mr-8">
+          <Link href="/compte">{t('monCompte')}</Link>
+        </div>
+        <div>
+          <Link href="/connexionView">{t('login/register')}</Link>
+
           <p>Paramètres</p>
         </div>
         <div className="mr-8">
@@ -28,6 +46,7 @@ export default function Navbar() {
         </div>
         <div>
           <Link href="/inscriptionView">Créer un compte</Link>
+
         </div>
       </div>
     </>
