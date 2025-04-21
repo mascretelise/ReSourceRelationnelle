@@ -8,6 +8,7 @@ import Link from "next/link";
 import Navbar from "@/app/components/navbarView";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
 import {useTranslations} from 'next-intl';
+import UploadIconeProfil from "./uploadIconeProfil";
 
 export default function CompteControllerAdmin() {
   const t = useTranslations('compteAdmin');
@@ -38,6 +39,9 @@ export default function CompteControllerAdmin() {
   return (
     <div>
       <Navbar />
+      <div>photo de profil</div>
+      <button>Modifier ma photo de profil</button>
+      {<UploadIconeProfil />}
       <h1>{t('Bonjour')} {firstname}</h1>
       <p>{t('compteAdmin')}</p>
       <h3>{t('mesInformations')}</h3>
