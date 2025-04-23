@@ -37,8 +37,9 @@
   "compteAdmin": {
     "Bonjour": "Bonjour",
     "compteAdmin": "Compte Administrateur",
-    "mesInformations": "Mes informations",
+    "MesInformations": "Mes informations",
     "parametres": "Paramètres",
-    "deconnexion": "Se déconnecter"
+    "deconnexion": "Se déconnecter",
+    "Changer sa photo de profil": "Changer sa photo de profil"
   }
 }
