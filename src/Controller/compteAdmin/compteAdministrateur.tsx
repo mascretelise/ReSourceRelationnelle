@@ -41,7 +41,6 @@ export default function CompteControllerAdmin() {
       const nomFichier = urlIconeProfil[0].uti_iconeProfil;
       console.log("Nom du fichier icone : ", nomFichier);
       const urlIcone = `https://resourcesrelationnelles.s3.eu-west-3.amazonaws.com/iconesProfil/${nomFichier}`;
-      //const url = `https://${Bucket}.s3.amazonaws.com/${Key}`;
       
       console.log("get url : ", urlIconeProfil)
       console.log("url icone", urlIcone)
@@ -70,8 +69,9 @@ export default function CompteControllerAdmin() {
       </div>
       <div>
         <div className="border border-black w-64 rounded-md">{<UploadIconeProfil />}</div>
-        <div className="border border-black"><h3><Link href="/paramCompte">{t('MesInformations')}</Link></h3></div>
-        <div className="border border-black"><button>{t('deconnexion')}</button></div>
+        <div className="border border-black w-64"><h3><Link href="/paramCompte">{t('MesInformations')}</Link></h3></div>
+        <div className="border border-black w-64"><h3><Link href="/actionsCategories">{t('actionCategorie')}</Link></h3></div>
+        <div className="border border-black w-64"><button>{t('deconnexion')}</button></div>
       </div>
     </div>
   );
