@@ -11,12 +11,14 @@ const t = useTranslations('navbar');
     <>
       <div className="w-1440px h-114px bg-cyan-100 border border-black flex items-center justify-between">
         <div>
+          <Link href="/">
           <Image
             src={"/img/logo.png"}
             width={150}
             height={150}
             alt="logo de l'entreprise"
           />
+          </Link>
         </div>
         <div className=" border rounded-md">
           <input type="Rechercher ..." className="border rounded-md w-52" />

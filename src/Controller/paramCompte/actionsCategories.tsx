@@ -3,13 +3,24 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import ModifCategory from "./formModifCategory";
+import AjoutCategory from "./ajoutCategorie";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Navbar from "@/app/components/navbarView";
+
+
 
 export default function ActionsCategorie() {
   const [category, setCategory] = useState<
-    { cat_ucid: string; cat_nom: string }[]
-  >([]);
+    { cat_ucid: string; cat_nom: string }[]>([]);
   const [formCatId, setFormCatId] = useState<string | null>(null);
-  const [formCat, setFormCat] = useState<string | null>(null);
+  const [formAjoutCat, setFormAjoutCat] = useState(false);
+  
 
   const fetchData = async () => {
     const getCategory = await fetch(
@@ -62,27 +73,45 @@ export default function ActionsCategorie() {
   };
 
   return (
-    <>
-      <h1>Tableau de catégories</h1>
-      <ul>
+    <div className="flex justify-center items-stretch flex-col">
+      <Navbar />
+      <h1 className="flex justify-center text-2xl">Tableau de catégories</h1>
+      <div className="flex justify-center">
+      <TableContainer component={Paper} sx={{ width: 800}} className="border-2 border-b-gray-500 flex justify-center">
+      <Table sx={{ width: 800}} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Catégories</TableCell>
+            <TableCell align="center">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
         {category.map((cat) => (
-          <li key={cat.cat_ucid}>
+          <tr className="border-1 border-b-gray-500" key={cat.cat_ucid}>
+            <th>
             <p>{cat.cat_nom}</p>
+            </th>
+            <th>
             <button onClick={() => setFormCatId(cat.cat_ucid)}>
-              Modifier le nom de la catégorie
+              Modifier
             </button>
             {formCatId === cat.cat_ucid && (
               <ModifCategory catId={cat.cat_ucid} onClose={() => setFormCatId(null)}/>
             )}
-
             <br />
-            <button onClick={() => onSubmitDelete(cat.cat_ucid)}>
-              Supprimer la catégorie
+            <button onClick={() => onSubmitDelete(cat.cat_nom)}>
+              Supprimer
             </button>
-          </li>
+            </th>
+          </tr>
         ))}
-        <button>Ajouter une catégorie</button>
-      </ul>
-    </>
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </div>
+    <button className="border border-b-blue-300 justify-self-center rounded-lg w-64 " onClick={() => setFormAjoutCat(!formAjoutCat)}>Ajouter une catégorie</button>
+    {formAjoutCat && <AjoutCategory />}
+    
+    </div>
   );
 }
