@@ -45,16 +45,13 @@ export default function ControllerParametres() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <Navbar />
-      </div>
-      <div>
-        <p>{t('nom')} : {firstname}</p>
-        <p>{t('prenom')} : {name}</p>
+    <div className="min-h-screen bg-gray-100 justify-items-stretch">
+      <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md p-6 text-center">
+        <p className="mt-4 text-xl font-bold">{t('nom')} : {name} </p>
+        <p className="mt-4 text-xl font-bold">{t('prenom')} : {firstname} </p>
 
-        <p>{t('email')} : {email}</p>
-        <button onClick={() => setForm(!form)} className="bg-amber-600">
+        <p className="text-gray-500 text-sm mb-4 mt-4">{t('email')} : {email}</p>
+        <button onClick={() => setForm(!form)} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
         {t('btnModifInfos')}
         </button>
         {form && <ModifInfos />}

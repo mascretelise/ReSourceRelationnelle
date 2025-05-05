@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import ControllerParametres from "@/Controller/paramCompte/param"
-export default function parametres() {
+export default function Parametres() {
 
    return(
         <div>

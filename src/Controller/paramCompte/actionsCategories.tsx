@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Navbar from "@/app/components/navbarView";
+
 
 
 
@@ -74,7 +74,7 @@ export default function ActionsCategorie() {
 
   return (
     <div className="flex justify-center items-stretch flex-col">
-      <Navbar />
+
       <h1 className="flex justify-center text-2xl">Tableau de catégories</h1>
       <div className="flex justify-center">
       <TableContainer component={Paper} sx={{ width: 800}} className="border-2 border-b-gray-500 flex justify-center">

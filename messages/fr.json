@@ -23,7 +23,7 @@
   "paramCompte": {
     "nom": "Nom",
     "prenom": "Prénom",
-    "email": "Email address",
+    "email": "Adresse mail",
     "btnModifInfos": "Modifier mes informations"
   },
 

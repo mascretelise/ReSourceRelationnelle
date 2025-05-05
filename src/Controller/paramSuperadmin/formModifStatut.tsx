@@ -8,18 +8,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import {useTranslations} from 'next-intl';
 
+const statutToNumber: Record<string, number> = {
+    "Citoyen": 1,
+    "Admin": 2,
+    "Super Administrateur": 3,
+    "Modérateur": 4,
+};
+
 const schemaZod = z.object({
   statut: z.string().min(1, "Le changement de statut est obligatoire"),
- 
 });
+
 type ModifStatutProps = {
     uti_uuid: string;
     onClose: () => void;
-  };
+};
+
 type FormData = z.infer<typeof schemaZod>;
+
 export default function ModifStatut({ uti_uuid, onClose }: ModifStatutProps) {
-const t = useTranslations('formModifInfos');
-const [serverError, setServerError] = useState("")
+  const t = useTranslations('formModifInfos');
+  const [serverError, setServerError] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -31,34 +41,49 @@ const [serverError, setServerError] = useState("")
     defaultValues: {
       statut: ""
     },
-    mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant 
+    mode: "onBlur",
   });
-  
 
   const onSubmit = async (data: FormData) => {
-    console.log(data)
+    console.log("Données envoyées (texte) :", data);
+
+
+    const valeurEnvoyee = statutToNumber[data.statut];
+    console.log("Valeur envoyée (chiffre attendu) :", valeurEnvoyee);
+
+    if (!valeurEnvoyee) {
+      setServerError("Statut invalide, vérifiez l'entrée.");
+      return;
+    }
+
     setServerError("");
     try {
       const email = await emailUserByToken();
       console.log("email modif infos", email);
+
       const response = await fetch(`http://localhost:3000/api/user/editAccounts?id=${uti_uuid}`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ statut: valeurEnvoyee }), 
       });
+
       const responseData = await response.json();
-      console.log("reponse form modif infos : ", responseData)
-      if(responseData){
+      console.log("Réponse form modif infos : ", responseData);
+
+      if (response.ok) {
         window.location.href = '/editStatut';
+      } else {
+        setServerError(responseData.error || "Erreur inconnue");
       }
     } catch (error) {
       console.error("Erreur :", error);
+      setServerError("Erreur serveur");
     }
-    
   };
+
   return (
     <div>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -66,10 +91,15 @@ const [serverError, setServerError] = useState("")
           name="statut"
           control={control}
           render={({ field }) => (
-            <div className="">
+            <div>
               <label className="block text-sm/6 font-medium text-gray-900">Statut</label>
               <div className="mt-2">
-                <input {...field} type="text" name="lastName" id="lastName"  required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+                <input
+                  {...field}
+                  type="text"
+                  required
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
               </div>
               {errors.statut && <p style={{ color: "red" }}>{errors.statut.message}</p>}
             </div>
@@ -81,11 +111,7 @@ const [serverError, setServerError] = useState("")
           <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           type="submit">{t('btnModifInfos')}</button>
         </div>
-    </form>
+      </form>
     </div>
   );
 }
-
-
-
-

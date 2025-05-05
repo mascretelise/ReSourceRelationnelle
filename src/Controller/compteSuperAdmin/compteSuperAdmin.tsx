@@ -7,11 +7,9 @@ import { useCookies } from "react-cookie";
 import Link from "next/link";
 import Navbar from "@/app/components/navbarView";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
-import{ Deconnexion} from "../paramCompte/deconnexion";
-
+import { Deconnexion } from "../paramCompte/deconnexion";
 
 export default function CompteControllerSuperAdmin() {
-
   const [firstname, setFirstame] = useState("");
   useEffect(() => {
     const fetchData = async () => {
@@ -40,15 +38,24 @@ export default function CompteControllerSuperAdmin() {
     <div>
       <Navbar />
       <div>
-        <h1 className="text-4xl justify-self-center content-start">Bonjour {firstname}</h1>
+        <h1 className="text-4xl justify-self-center content-start">
+          Bonjour {firstname}
+        </h1>
         <p className="justify-self-center">Compte Super Administrateur</p>
       </div>
       <div className="flex items-center gap-x-8 justify-self-center mt-6">
-        <div className="border border-black w-80 h-14 rounded-lg text-center "><h3><Link href="/paramCompte">Mes Informations</Link></h3></div>
-        <div className="border border-black w-80"><h3><Link href="/editStatut">Gérer et créer des comptes</Link></h3></div>
+        <div className="border border-black w-80 h-14 rounded-lg text-center ">
+          <h3>
+            <Link href="/paramCompte">Mes Informations</Link>
+          </h3>
+        </div>
+        <div className="border border-black w-80">
+          <h3>
+            <Link href="/editStatut">Gérer et créer des comptes</Link>
+          </h3>
+        </div>
         <div className="border border-black w-64">
-            <button>Deconnexion</button>
-            
+          <button onClick={Deconnexion}>Deconnexion</button>
         </div>
       </div>
     </div>
