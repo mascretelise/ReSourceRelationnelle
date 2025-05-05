@@ -90,10 +90,10 @@ try {
             className="inline-block rounded-full w-24 h-24 ring-2 ring-white object-cover"
           />
         </div>
-        <p className="justify-self-center pb-8">{t("compteAdmin")}</p>
+        <p className="justify-self-center mt-3 pb-8">{t("compteAdmin")}</p>
 
         <div>
-          <div className="border border-black w-68 rounded-md p-1 justify-self-center">
+          <div className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex flex-row gap-x-3 justify-self-center">
             {<UploadIcone />}
           </div>
         </div>
