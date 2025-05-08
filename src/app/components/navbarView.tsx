@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,22 +9,20 @@ export default function Navbar() {
 const t = useTranslations('navbar');
 
 
-
-
-export default function Navbar() {
-
   return (
     <>
       <div className="w-1440px h-114px bg-cyan-100 border border-black flex items-center justify-between">
-        <div>
-          <Image
-            src={"/img/logo.png"}
-            width={150}
-            height={150}
-            alt="logo de l'entreprise"
-          />
+        <div className="">
+          <Link href="/">
+            <Image
+              src={"/img/logo.png"}
+              width={150}
+              height={150}
+              alt="logo de l'entreprise"
+            />
+          </Link>
         </div>
-        <div className=" border rounded-md">
+        <div className="border rounded-md bg-white border-black">
           <input type="Rechercher ..." className="border rounded-md w-52" />
         </div>
         <div>
@@ -38,15 +37,6 @@ export default function Navbar() {
         </div>
         <div>
           <Link href="/connexionView">{t('login/register')}</Link>
-
-          <p>Paramètres</p>
-        </div>
-        <div className="mr-8">
-          <p>Mon compte</p>
-        </div>
-        <div>
-          <Link href="/inscriptionView">Créer un compte</Link>
-
         </div>
       </div>
     </>

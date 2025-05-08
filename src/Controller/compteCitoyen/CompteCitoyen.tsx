@@ -8,6 +8,7 @@ import Link from "next/link";
 import Navbar from "@/app/components/navbarView";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
 import {useTranslations} from 'next-intl';
+import { Deconnexion } from "../paramCompte/deconnexion";
 
 export default function CompteControllerAdmin() {
   const t = useTranslations('compteAdmin');
@@ -41,7 +42,7 @@ export default function CompteControllerAdmin() {
       <h1>{t('Bonjour')} {firstname}</h1>
       <h3>{t('mesInformations')}</h3>
       <Link href={"../paramCompte"}>{t('parametres')}</Link>
-      <button>{t('deconnexion')}</button>
+      <button onClick={Deconnexion}>{t('deconnexion')}</button>
     </div>
   );
 }
