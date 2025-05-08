@@ -18,19 +18,6 @@ export default function DashboardAdmin() {
   const [urlIcone, setUrlIcone] = useState("");
   const [activePage, setActivePage] = useState("dashboard");
 try {
-  const renderContent = () => {
-    switch (activePage) {
-      case "dashboard":
-        return <div>Bienvenue sur le Dashboard</div>;
-      case "informations":
-        return <ControllerParametres />;
-      case "categories":
-        return <ActionsCategorie />;
-
-      default:
-        return <div>Sélectionnez une page</div>;
-    }
-  };
   useEffect(() => {
     const fetchData = async () => {
       const email = await emailUserByToken();
@@ -75,7 +62,7 @@ try {
   return (
     <div>
       <div className=" min-h-screen bg-gray-100 justify-items-stretch ">
-        <div className="justify-self-center text-4xl pb-8">
+        <div className="justify-self-center text-5xl pb-8">
 
             {t("Bonjour")} {firstname}
 
@@ -93,7 +80,7 @@ try {
         <p className="justify-self-center mt-3 pb-8">{t("compteAdmin")}</p>
 
         <div>
-          <div className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex flex-row gap-x-3 justify-self-center">
+          <div className="mt-6 px-4 py-2 bg-[#78C8CC] text-white rounded-lg hover:bg-[#399E8C] flex flex-row gap-x-3 justify-self-center">
             {<UploadIcone />}
           </div>
         </div>

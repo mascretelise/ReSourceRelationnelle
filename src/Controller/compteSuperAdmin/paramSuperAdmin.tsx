@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
 import Navbar from "@/app/components/navbarView";
-import ModifInfos from "./formModifInfos";
+import ModifInfos from "../paramCompte/formModifInfos";
 import { useTranslations } from "next-intl";
 
-export default function ControllerParametres() {
+export default function ControllerParametresSuperAdmin() {
   const t = useTranslations("paramCompte");
   const [name, setName] = useState("");
   const [firstname, setFirstame] = useState("");
@@ -51,7 +51,7 @@ export default function ControllerParametres() {
       </h1>
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 text-center">
         <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mt-4">
-          Administrateur
+          Super Administrateur
         </span>
         <p className="mt-4 text-xl font-bold">
           {t("nom")} : {name}{" "}

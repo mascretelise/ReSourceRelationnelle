@@ -45,7 +45,6 @@ export default function EditStatut() {
 
   return (
     <div className="">
-      <Navbar />
       <h1 className="text-2xl my-4 flex justify-center">Modifier les statuts des comptes</h1>
       <div className="flex justify-center">
       <TableContainer component={Paper} sx={{ width: 800 }}>

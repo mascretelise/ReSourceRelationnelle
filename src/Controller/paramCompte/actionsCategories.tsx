@@ -71,7 +71,7 @@ export default function ActionsCategorie() {
 
   return (
     <div className="min-h-screen bg-gray-100 justify-items-stretch pt-6pb-12">
-      <h1 className="text-2xl font-semibold text-center mb-6 text-gray-700">
+      <h1 className="text-4xl font-semibold text-center mb-6 text-gray-700">
         Tableau des catégories
       </h1>
       <div className="flex justify-center">
@@ -115,7 +115,7 @@ export default function ActionsCategorie() {
         </TableContainer>
       </div>
       <button
-        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex flex-row gap-x-3 justify-self-center "
+        className="mt-6 px-4 py-2 bg-[#78C8CC] text-white rounded-lg hover:bg-[#399E8C] flex flex-row gap-x-3 justify-self-center "
         onClick={() => setFormAjoutCat(!formAjoutCat)}
       >
         Ajouter une catégorie
