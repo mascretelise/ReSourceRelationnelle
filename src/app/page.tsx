@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from "./home";
 import Navbar from "@/app/components/navbarView";
 
@@ -36,12 +36,83 @@ const Page = () => {
       });
   }, []);
 
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+  const [commentaire, setCommentaire] = useState<string>('');
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("http://localhost:3000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload échoué");
+
+      const data = await res.json();
+      const fichierUrl = data.url;
+
+      // Envoi des données à l'API pour créer la ressource
+      const resRessource = await fetch("http://localhost:3000/api/ressources", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          res_nom: file.name,
+          res_categorie: "Catégorie", // À adapter selon la catégorie réelle
+          com_commentaire: commentaire,
+          res_extension: file.name.split('.').pop() || '', // Extension du fichier
+          res_auteur: "johndoe@example.com", // À remplacer par l'email de l'utilisateur actuel
+          res_lien: fichierUrl,
+          res_description: "Description de la ressource", // À adapter si besoin
+        }),
+      });
+
+      if (!resRessource.ok) throw new Error("Création ressource échouée");
+
+      setUploadStatus("Ressource créée avec succès !");
+    } catch (err) {
+      console.error(err);
+      setUploadStatus("Erreur lors de l'envoi.");
+    }
+  };
+
   return (
     <>
       <Home />
       <main className="p-6">
         <h1 className="text-4xl font-bold">Bienvenue sur ReSource Relationnelle</h1>
         <p className="mt-4 text-lg">Votre plateforme de gestion des ressources.</p>
+
+        <section className="mt-8">
+          <h2 className="text-2xl font-semibold">Ajouter une ressource</h2>
+          <div className="mt-4 flex gap-4 items-center">
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="border rounded p-2"
+            />
+            <input
+              type="text"
+              placeholder="Commentaire sur la ressource"
+              value={commentaire}
+              onChange={(e) => setCommentaire(e.target.value)}
+              className="border rounded p-2"
+            />
+            <button
+              onClick={handleUpload}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              Envoyer
+            </button>
+          </div>
+          {uploadStatus && <p className="mt-2 text-sm">{uploadStatus}</p>}
+        </section>
 
         <section className="mt-8">
           <h2 className="text-2xl font-semibold">Dernières Ressources Globales</h2>
