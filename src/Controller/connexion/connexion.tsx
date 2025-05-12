@@ -125,7 +125,5 @@ export default function ConnexionController() {
     </div>
   );
 }
-function useScopedI18n(arg0: string) {
-  throw new Error("Function not implemented.");
-}
+
 

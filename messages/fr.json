@@ -23,7 +23,7 @@
   "paramCompte": {
     "nom": "Nom",
     "prenom": "Prénom",
-    "email": "Email address",
+    "email": "Adresse mail",
     "btnModifInfos": "Modifier mes informations"
   },
 
@@ -37,8 +37,10 @@
   "compteAdmin": {
     "Bonjour": "Bonjour",
     "compteAdmin": "Compte Administrateur",
-    "mesInformations": "Mes informations",
+    "MesInformations": "Mes informations",
     "parametres": "Paramètres",
-    "deconnexion": "Se déconnecter"
+    "deconnexion": "Se déconnecter",
+    "Changer sa photo de profil": "Changer sa photo de profil",
+    "actionCategorie": "Actions sur les catégories"
   }
 }

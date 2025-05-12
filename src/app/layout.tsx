@@ -50,6 +50,7 @@ export default function RootLayout({
 
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale} from 'next-intl/server';
+import "./styles/globals.css";
  
 export default async function RootLayout({
   children

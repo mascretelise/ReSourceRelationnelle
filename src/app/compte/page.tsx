@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import CompteCitoyen from '../compteCitoyen/page'
 import CompteAdmin from '../compteAdmin/page'
 import {emailUserByToken} from '@/Controller/componentsConnexion/isLogged'
+import CompteSuperAdmin from '../compteSuperAdmin/page';
 
 export default function IsLoggedIn() {
   const [statut, setStatut] = useState<number>(0);
@@ -33,10 +34,22 @@ export default function IsLoggedIn() {
     };
     fetchData();
   }, []);
-  if(statut == 2){
+  /*if(statut == 2){
     console.log("admin")
     return <CompteAdmin />
   }else if (statut == 1) {
    return <CompteCitoyen />
-  }
+  }*/
+
+   switch (statut) {
+    case  2:
+      console.log("admin")
+      return <CompteAdmin />
+    case 1: 
+        return <CompteCitoyen />
+    case 3 : 
+        return <CompteSuperAdmin />
+    default:
+      break;
+   }
 }

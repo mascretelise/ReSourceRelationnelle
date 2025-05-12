@@ -37,8 +37,10 @@
   "compteAdmin": {
     "Bonjour": "Hello",
     "compteAdmin": "Administrator account",
-    "mesInformations": "My informations",
+    "MesInformations": "My informations",
     "parametres": "Parameters",
-    "deconnexion": "Sign out"
+    "deconnexion": "Sign out",
+    "Changer sa photo de profil": "Edit your profile picture",
+    "actionCategorie": "Actions on categories"
   }
 }
