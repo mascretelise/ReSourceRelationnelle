@@ -2,7 +2,9 @@
   "ConnexionPage": {
     "adresseMail": "Adresse email",
     "mdp": "Mot de passe",
-    "connexion": "se connecter"
+    "connexion": "Se connecter",
+    "mdpOublie": "Mot de passe oublié ?",
+    "pasDeCompte": "Pas de compte ? Créez en un ici !"
   },
 
   "inscriptionPage": {
@@ -15,9 +17,9 @@
   },
 
   "navbar": {
-    "parametres": "Paramètres",
     "monCompte": "Mon Compte",
-    "login/register": "Se connecter/Créer un compte"
+    "login/register": "Se connecter/Créer un compte",
+    "referentielRessources": "Référentiel de ressources"
   },
 
   "paramCompte": {
@@ -37,10 +39,48 @@
   "compteAdmin": {
     "Bonjour": "Bonjour",
     "compteAdmin": "Compte Administrateur",
-    "MesInformations": "Mes informations",
+    "mesInformations": "Mes informations",
     "parametres": "Paramètres",
     "deconnexion": "Se déconnecter",
     "Changer sa photo de profil": "Changer sa photo de profil",
-    "actionCategorie": "Actions sur les catégories"
+    "gestionCategories": "Gestion des catégories des ressources",
+    "tableauBordAdmin": "Tableau de bord Administrateur",
+    "tableauBord": "Tableau de Bord",
+    "selectionnerPage": "Sélectionner une page",
+    "uploadIcone": "Télécharger une image de profil"
+  },
+
+  "modifCategories":{
+    "tableauCategories": "Tableau de catégories",
+    "categories": "Catégories",
+    "actions": "Actions",
+    "modifier": "Modifier",
+    "supprimer": "Supprimer",
+    "ajoutCategorie": "Ajouter une catégorie",
+    "nomCategorie": "Nom de la catégorie",
+    "envoyerModif": "Envoyer la modification"
+  },
+
+  "compteSuperAdmin": {
+    "Bonjour": "Bonjour",
+    "compteSuperAdmin": "Compte Super Administrateur",
+    "mesInformations": "Mes informations",
+    "parametres": "Paramètres",
+    "deconnexion": "Se déconnecter",
+    "Changer sa photo de profil": "Changer sa photo de profil",
+    "gestionComptes": "Gestion des statuts des comptes",
+    "tableauBordSuperAdmin": "Tableau de bord Super Administrateur",
+    "selectionnerPage": "Sélectionnez une page",
+    "tableauBord": "Tableau de Bord",
+    "superAdmin": "Super Administrateur"
+  },
+
+  "editStatut": {
+    "modifierStatutsComptes": "Modifier les statuts des comptes",
+    "nomFamille": "Nom de Famille",
+    "prenom": "Prénom",
+    "email": "E-mail",
+    "statut": "Statut",
+    "modifierStatut": "Modifier le statut"
   }
 }

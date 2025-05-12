@@ -1,17 +1,17 @@
 "use client";
 import * as React from "react";
-//import from 'cookies-next';
+
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Link from "next/link";
 import Navbar from "@/app/components/navbarView";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
-import {useTranslations} from 'next-intl';
+import { useTranslations } from "next-intl";
 import { Deconnexion } from "../paramCompte/deconnexion";
 
 export default function CompteControllerAdmin() {
-  const t = useTranslations('compteAdmin');
+  const t = useTranslations("compteAdmin");
   const [firstname, setFirstame] = useState("");
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ export default function CompteControllerAdmin() {
       console.log("email by param : ");
 
       const resInfos = await fetch(
-        `http://localhost:3000/api/user/infosByEmail?email=${email}`,
+        `${process.env.NEXT_PUBLIC_URL_API}/api/user/infosByEmail?email=${email}`,
         {
           method: "GET",
           credentials: "include",
@@ -39,10 +39,12 @@ export default function CompteControllerAdmin() {
   return (
     <div>
       <Navbar />
-      <h1>{t('Bonjour')} {firstname}</h1>
-      <h3>{t('mesInformations')}</h3>
-      <Link href={"../paramCompte"}>{t('parametres')}</Link>
-      <button onClick={Deconnexion}>{t('deconnexion')}</button>
+      <h1>
+        {t("Bonjour")} {firstname}
+      </h1>
+      <h3>{t("mesInformations")}</h3>
+      <Link href={"../paramCompte"}>{t("parametres")}</Link>
+      <button onClick={Deconnexion}>{t("deconnexion")}</button>
     </div>
   );
 }

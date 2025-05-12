@@ -8,15 +8,15 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 
 const schemaZod = z.object({
-  category: z.string().min(1, "Le nom est obligatoire"),
+  suspendu: z.string().min(1, "Le nom est obligatoire"),
 });
 type ModifCategoryProps = {
-  catId: string;
+    accountId: string;
   onClose: () => void;
 };
 type FormData = z.infer<typeof schemaZod>;
-export default function ModifCategory({ catId, onClose }: ModifCategoryProps) {
-  console.log("id de la catégorie à modifier ", catId);
+export default function SuspendreCompteById({ accountId, onClose }: ModifCategoryProps) {
+  console.log("id de la catégorie à modifier ", accountId);
   const t = useTranslations("modifCategories");
   const [serverError, setServerError] = useState("");
   const {
@@ -28,7 +28,7 @@ export default function ModifCategory({ catId, onClose }: ModifCategoryProps) {
   } = useForm<FormData>({
     resolver: zodResolver(schemaZod),
     defaultValues: {
-      category: "",
+      suspendu: "",
     },
     mode: "onBlur", //Valide la donnée dès que l'utilisateur a quitté le champ mais pas avant
   });
@@ -38,7 +38,7 @@ export default function ModifCategory({ catId, onClose }: ModifCategoryProps) {
     setServerError("");
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL_API}/api/category/editCategory?id=${catId}`,
+        `${process.env.NEXT_PUBLIC_URL_API}/api/user/suspendAccount?id=${accountId}`,
         {
           method: "POST",
           credentials: "include",
@@ -61,7 +61,7 @@ export default function ModifCategory({ catId, onClose }: ModifCategoryProps) {
     <div>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="category"
+          name="suspendu"
           control={control}
           render={({ field }) => (
             <div className="">
@@ -78,8 +78,8 @@ export default function ModifCategory({ catId, onClose }: ModifCategoryProps) {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
-              {errors.category && (
-                <p style={{ color: "red" }}>{errors.category.message}</p>
+              {errors.suspendu && (
+                <p style={{ color: "red" }}>{errors.suspendu.message}</p>
               )}
             </div>
           )}

@@ -5,12 +5,13 @@ import Navbar from "@/app/components/navbarView";
 import { useTranslations } from "next-intl";
 import { Deconnexion } from "../paramCompte/deconnexion";
 import DashboardSuperAdmin from "./dashboard";
-import EditStatut from "../paramSuperadmin/modifStatut";
+import EditStatut from "../editStatut/modifStatut";
 import ControllerParametresSuperAdmin from "./paramSuperAdmin";
 
 export default function CompteControllerAdmin() {
-  const t = useTranslations("compteAdmin");
+  const t = useTranslations("compteSuperAdmin");
   const [activePage, setActivePage] = useState("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const renderContent = () => {
     switch (activePage) {
@@ -27,78 +28,101 @@ export default function CompteControllerAdmin() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="flex min-h-screen bg-gray-100">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white shadow-lg p-4">
-          <h2 className="text-xl font-bold mb-6 text-gray-800">
-            Tableau de bord Super-Administrateur
-          </h2>
-          <nav className="flex flex-col gap-4">
+        <div>
+          <Navbar />
+    
+          {/* Top bar avec menu burger (mobile) */}
+          <div className="flex items-center justify-between bg-white p-4 shadow-lg lg:hidden">
+            <h1 className="text-lg font-bold text-gray-800">{t("tableauBordSuperAdmin")}</h1>
             <button
-              onClick={() => setActivePage("dashboard")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
-                activePage === "dashboard"
-                  ? "bg-[#78C8CC] "
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="text-gray-600 focus:outline-none"
             >
-              Tableau de bord
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {sidebarOpen ? (
+                  // Icône de fermeture (X)
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  // Icône burger
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
             </button>
-            <button
-              onClick={() => setActivePage("informations")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
-                activePage === "informations"
-                  ? "bg-[#78C8CC] "
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
+          </div>
+    
+          <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
+            {/* Sidebar */}
+            <aside
+              className={`
+                bg-white shadow-lg p-4 w-full lg:w-64 
+                ${sidebarOpen ? "block" : "hidden"} 
+                lg:block
+              `}
             >
-              Mes Informations
-            </button>
-
-            <button
-              onClick={() => setActivePage("categories")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
-                activePage === "categories"
-                  ? "bg-[#78C8CC] "
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              Gestion du statut des comptes
-            </button>
-            <button
-              onClick={Deconnexion}
-              className={`w-full text-left px-4 py-2 rounded-lg transition flex flex-row gap-x-4 items-center ${
-                activePage === "categories"
-                  ? "bg-gray-300"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              Se déconnecter
-              <img
-                className="w-5 h-5"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC8klEQVR4nO2a229
-            MURTGf41OR+La1rTjgfBGSBH/g0tVUF6KN0GfqqbvLiESFR4IfwhR8YKSqKq6jaAtIm5BxCOVkYzs5DvJykToOT2XOZN+yXlopnvt9e21116XvWEGtYsFQCdwCrgKj
-            ANfgEngF/AdeKHfzgDbgEaqBBlgD3BdypZ9fr81di+QTYKAm7QP+GCUKgE3gOPATmAF0KL/zWj1VwLbgSPATVnLG/8RKACz4yLRrm3jKfAU2Ac0BZC1ENgPPDDyXgGbi
-            RBuZS+ZCYvAJqAuJPlO1iMj/2IU1lkMjGiCn0AvUB/2JMAs4BDwQ3O5OVvDEr4UmDBmX0f0aAPGNKebe3kYlnhrVqeZ+NAM3DNkWqfjE0MSNKQ4ETfmGDIjQX3mnAQ4i
-            +RIDs1mm7kDwDdOKzKvIXm0mQPAnW6pRq/xl9iCZhSoBx6LjCOVarSLyKegVnE5011gkGRRB4yKzO4gJIoaPEzyOChdrgUlUdTfSaNRJUNpqrEtp8y2rIIoT/VgUHptT
-            aMlLI5Jt35SagkPO6TfZVJqCQ+rpONLUmoJD4uk51f+AltuRvXdIRxkJW8yKSK34yCSq9harqiqVuT+tbVqxtnTZJnO/x2/NRUQ02CZQenVMdUB1WiZJpM0zvcz0JK5T
-            /Loli4DQQa3KM64tlDShdVDEekixegQifdJXUOE1Xx4IiI9pBgFkRjza41qatCt1S2AI7LB7+CzpmWa5LGbM7cB54MIyKoFVFYj2d0uxY256tx4HZzADu6KqzcSNBrzt
-            ULOkBgPY1csMd3w18B64vGJCUNiWViC84rq3tVbn25qozhiC8axh6Pwzwbggqn2nun2NYzLUCdji4kTnmNHGvQ2qqCxhA6oIRAkAew2aUdZW8n3ETsd6xwG3lW8YrgFn
-            AB26XFAXl3zBh0Uq1UUHVUqbl9LuLSjJ6nUI6PkbaDiFcNUv5LepnRVU+40Tx3Ak8AVbb/Pcly38t+A5ypP+9W39VVPzIAU4Q+qrDvJW9hbZwAAAABJRU5ErkJggg=="
-                alt="logout-rounded-left"
-              ></img>
-            </button>
-          </nav>
-        </aside>
-
-        {/* Main content */}
-        <main className="flex-1 p-8">
-          <div className="mt-8">{renderContent()}</div>
-        </main>
-      </div>
-    </div>
-  );
-}
-//<Link href="/uploadIconeProfil">{t('Changer sa photo de profil')}</Link>
+              <h2 className="text-xs lg:text-xl font-bold mb-6 text-gray-800 text-center lg:text-left">
+                {t("tableauBordSuperAdmin")}
+              </h2>
+    
+              <nav className="flex flex-col gap-2 lg:gap-4">
+                <button
+                  onClick={() => { setActivePage("dashboard"); setSidebarOpen(false); }}
+                  className={`px-4 py-2 rounded-lg transition text-sm lg:text-base ${
+                    activePage === "dashboard"
+                      ? "bg-[#78C8CC] text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  {t("tableauBord")}
+                </button>
+    
+                <button
+                  onClick={() => { setActivePage("informations"); setSidebarOpen(false); }}
+                  className={`px-4 py-2 rounded-lg transition text-sm lg:text-base ${
+                    activePage === "informations"
+                      ? "bg-[#78C8CC] text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  {t("mesInformations")}
+                </button>
+    
+                <button
+                  onClick={() => { setActivePage("categories"); setSidebarOpen(false); }}
+                  className={`px-4 py-2 rounded-lg transition text-sm lg:text-base ${
+                    activePage === "categories"
+                      ? "bg-[#78C8CC] text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  {t("gestionComptes")}
+                </button>
+    
+                <button
+                  onClick={() => { Deconnexion(); setSidebarOpen(false); }}
+                  className="px-4 py-2 rounded-lg transition text-sm lg:text-base bg-gray-200 hover:bg-gray-300 flex items-center gap-2"
+                >
+                  {t("deconnexion")}
+                  <img
+                    className="w-4 h-4 lg:w-5 lg:h-5"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ix..."
+                    alt="logout"
+                  />
+                </button>
+              </nav>
+            </aside>
+    
+            {/* Main content */}
+            <main className="flex-1 p-4 lg:p-8">
+              <div className="mt-4 lg:mt-8">{renderContent()}</div>
+            </main>
+          </div>
+        </div>
+      );
+    }
+    

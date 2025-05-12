@@ -1,5 +1,5 @@
 import * as React from "react";
-import EditStatut from "../../Controller/paramSuperadmin/modifStatut";
+import EditStatut from "../../Controller/editStatut/modifStatut";
 
 export default function editStatutView() {
   return (

@@ -2,12 +2,14 @@
   "ConnexionPage": {
     "adresseMail": "Email address",
     "mdp": "Password",
-    "connexion": "Login"
+    "connexion": "Log in",
+    "mdpOublie": "Forgot password?",
+    "pasDeCompte": "No account? Create one here!"
   },
 
   "inscriptionPage": {
-    "nom": "LastName",
-    "prenom": "FirstName",
+    "nom": "Last name",
+    "prenom": "First name",
     "email": "Email address",
     "mdp": "Password",
     "mdpConfirm": "Confirm password",
@@ -15,32 +17,70 @@
   },
 
   "navbar": {
-    "parametres": "Parameters",
     "monCompte": "My account",
-    "login/register": "Login/Create an account"
+    "login/register": "Log in / Sign up",
+    "referentielRessources": "Resource Repository"
   },
 
   "paramCompte": {
-    "nom": "LastName",
-    "prenom": "FirstName",
+    "nom": "Last name",
+    "prenom": "First name",
     "email": "Email address",
-    "btnModifInfos": "Edit my informations"
+    "btnModifInfos": "Edit my information"
   },
 
   "formModifInfos": {
-    "nomDeFamille": "LastName",
-    "prenom": "FirstName",
-    "pseudo": "Pseudonyme",
-    "btnModifInfos": "Edit my informations"
+    "nomDeFamille": "Last name",
+    "prenom": "First name",
+    "pseudo": "Username",
+    "btnModifInfos": "Edit my information"
   },
 
   "compteAdmin": {
     "Bonjour": "Hello",
     "compteAdmin": "Administrator account",
-    "MesInformations": "My informations",
-    "parametres": "Parameters",
-    "deconnexion": "Sign out",
-    "Changer sa photo de profil": "Edit your profile picture",
-    "actionCategorie": "Actions on categories"
+    "MesInformations": "My information",
+    "parametres": "Settings",
+    "deconnexion": "Log out",
+    "Changer sa photo de profil": "Change profile picture",
+    "gestionCategories": "Manage resource categories",
+    "tableauBordAdmin": "Administrator dashboard",
+    "tableauBord": "Dashboard",
+    "selectionnerPage": "Select a page",
+    "uploadIcone": "Upload profile image"
+  },
+
+  "modifCategories": {
+    "tableauCategories": "Categories table",
+    "categories": "Categories",
+    "actions": "Actions",
+    "modifier": "Edit",
+    "supprimer": "Delete",
+    "ajoutCategorie": "Add a category",
+    "nomCategorie": "Category name",
+    "envoyerModif": "Submit modification"
+  },
+
+  "compteSuperAdmin": {
+    "Bonjour": "Hello",
+    "compteSuperAdmin": "Super Administrator account",
+    "MesInformations": "My information",
+    "parametres": "Settings",
+    "deconnexion": "Log out",
+    "Changer sa photo de profil": "Change profile picture",
+    "gestionComptes": "Manage account roles",
+    "tableauBordSuperAdmin": "Super Administrator dashboard",
+    "selectionnerPage": "Select a page",
+    "tableauBord": "Dashboard",
+    "superAdmin": "Super Administrator"
+  },
+
+  "editStatut": {
+    "modifierStatutsComptes": "Edit account roles",
+    "nomFamille": "Last name",
+    "prenom": "First name",
+    "email": "Email",
+    "statut": "Role",
+    "modifierStatut": "Edit role"
   }
 }

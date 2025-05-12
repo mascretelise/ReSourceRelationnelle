@@ -11,8 +11,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useTranslations } from "next-intl";
 
 export default function ActionsCategorie() {
+  const t = useTranslations("modifCategories");
   const [category, setCategory] = useState<
     { cat_ucid: string; cat_nom: string }[]
   >([]);
@@ -21,7 +23,7 @@ export default function ActionsCategorie() {
 
   const fetchData = async () => {
     const getCategory = await fetch(
-      `http://localhost:3000/api/category/readCategory`,
+      `${process.env.NEXT_PUBLIC_URL_API}/api/category/readCategory`,
       {
         method: "GET",
         credentials: "include",
@@ -48,9 +50,9 @@ export default function ActionsCategorie() {
   const onSubmitDelete = async (category: string) => {
     console.log(category);
     const response = await fetch(
-      `http://localhost:3000/api/category/removeCategory?category=${category}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/api/category/removeCategory?category=${category}`,
       {
-        method: "POST",
+        method: "DELETE",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -70,57 +72,68 @@ export default function ActionsCategorie() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 justify-items-stretch pt-6pb-12">
-      <h1 className="text-4xl font-semibold text-center mb-6 text-gray-700">
-        Tableau des catégories
-      </h1>
-      <div className="flex justify-center">
-        <TableContainer
-          component={Paper}
-          sx={{ width: 800 }}
-          className="border-2 border-b-gray-500 flex justify-center  rounded-xl shadow-md "
-        >
-          <Table sx={{ width: 800 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Catégories</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {category.map((cat) => (
-                <tr className="border-1 border-b-gray-500" key={cat.cat_ucid}>
-                  <th>
-                    <p>{cat.cat_nom}</p>
-                  </th>
-                  <th>
-                    <button onClick={() => setFormCatId(cat.cat_ucid)}>
-                      Modifier
-                    </button>
-                    {formCatId === cat.cat_ucid && (
-                      <ModifCategory
-                        catId={cat.cat_ucid}
-                        onClose={() => setFormCatId(null)}
-                      />
-                    )}
-                    <br />
-                    <button onClick={() => onSubmitDelete(cat.cat_nom)}>
-                      Supprimer
-                    </button>
-                  </th>
-                </tr>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <button
-        className="mt-6 px-4 py-2 bg-[#78C8CC] text-white rounded-lg hover:bg-[#399E8C] flex flex-row gap-x-3 justify-self-center "
-        onClick={() => setFormAjoutCat(!formAjoutCat)}
+    <div className="min-h-screen bg-gray-100 justify-items-stretch pt-6 pb-12">
+  <h1 className="text-4xl font-semibold text-center mb-6 text-gray-700">
+    {t("tableauCategories")}
+  </h1>
+
+  <div className="flex justify-center px-4 sm:px-6 md:px-8">
+    <div className="w-full max-w-4xl overflow-x-auto">
+      <TableContainer
+        component={Paper}
+        sx={{ width: "100%" }}
+        className="border-2 border-b-gray-500 flex justify-center rounded-xl shadow-md"
       >
-        Ajouter une catégorie
-      </button>
-      {formAjoutCat && <AjoutCategory />}
+        <Table sx={{ width: "100%" }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">{t("categories")}</TableCell>
+              <TableCell align="center">{t("actions")}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {category.map((cat) => (
+              <tr className="border-1 border-b-gray-500" key={cat.cat_ucid}>
+                <th>
+                  <p>{cat.cat_nom}</p>
+                </th>
+                <th className="flex justify-center gap-2">
+                  <button onClick={() => setFormCatId(cat.cat_ucid)} className="text-blue-500 hover:text-blue-700">
+                    {t("modifier")}
+                  </button>
+                  {formCatId === cat.cat_ucid && (
+                    <ModifCategory
+                      catId={cat.cat_ucid}
+                      onClose={() => setFormCatId(null)}
+                    />
+                  )}
+                  <br />
+                  <button
+                    onClick={() => onSubmitDelete(cat.cat_nom)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    {t("supprimer")}
+                  </button>
+                </th>
+              </tr>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
+  </div>
+
+  <div className="flex justify-center mt-6">
+    <button
+      className="px-4 py-2 bg-[#78C8CC] text-white rounded-lg hover:bg-[#399E8C] flex flex-row gap-x-3 items-center"
+      onClick={() => setFormAjoutCat(!formAjoutCat)}
+    >
+      {t("ajoutCategorie")}
+    </button>
+  </div>
+
+  {formAjoutCat && <AjoutCategory />}
+</div>
+
   );
 }

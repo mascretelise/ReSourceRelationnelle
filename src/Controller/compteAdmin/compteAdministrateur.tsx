@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -11,10 +12,12 @@ import Image from "next/image";
 import ControllerParametres from "../paramCompte/param";
 import ActionsCategorie from "../paramCompte/actionsCategories";
 import DashboardAdmin from "./dashboard";
+import SuspendAccount from "./suspendreCompte";
 
 export default function CompteControllerAdmin() {
   const t = useTranslations("compteAdmin");
   const [activePage, setActivePage] = useState("dashboard");
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const renderContent = () => {
     switch (activePage) {
@@ -24,67 +27,120 @@ export default function CompteControllerAdmin() {
         return <ControllerParametres />;
       case "categories":
         return <ActionsCategorie />;
+      case "suspendreComptes":
+        return <SuspendAccount />
 
         default:
-        return <div>Sélectionnez une page</div>;
+        return <div>{t("selectionnerPage")}</div>;
     }
   };
 
   return (
     <div>
-      <Navbar />
-      <div className="flex min-h-screen bg-gray-100">
-        
-      {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg p-4">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Tableau de bord Administrateur</h2>
-        <nav className="flex flex-col gap-4">
+  <Navbar />
+  <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+
+    <aside className="hidden md:block w-64 bg-white shadow-lg p-4">
+      <h2 className="lg:text-xl text-sm font-bold mb-6 text-gray-800">Tableau de bord Administrateur</h2>
+      <nav className="flex flex-col gap-4">
         <button onClick={() => setActivePage("dashboard")}
+          className={`w-full text-left px-4 py-2 rounded-lg transition ${
+            activePage === "dashboard" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
+          }`}>
+          {t("tableauBord")}
+        </button>
+        <button onClick={() => setActivePage("informations")}
+          className={`w-full text-left px-4 py-2 rounded-lg transition ${
+            activePage === "informations" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
+          }`}>
+          {t("mesInformations")}
+        </button>
+        <button onClick={() => setActivePage("categories")}
+          className={`w-full text-left px-4 py-2 rounded-lg transition ${
+            activePage === "categories" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
+          }`}>
+          {t("gestionCategories")}
+        </button>
+        <button onClick={() => setActivePage("suspendreComptes")}
+          className={`w-full text-left px-4 py-2 rounded-lg transition ${
+            activePage === "suspendreComptes" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
+          }`}>
+          Gérer la suspension des comptes
+        </button>
+        <button onClick={Deconnexion}
+          className={`w-full text-left px-4 py-2 rounded-lg transition flex flex-row gap-x-4 items-center ${
+            activePage === "categories" ? "bg-gray-300" : "bg-gray-200 hover:bg-gray-300"
+          }`}>
+          <img className="w-5 h-5" src="data:image/png;base64,...ton image..." alt="logout-rounded-left" />
+          {t("deconnexion")}
+        </button>
+      </nav>
+    </aside>
+
+    {/* Menu Burger (mobile) */}
+    <div className="md:hidden flex justify-between items-center bg-white shadow p-4">
+      <h2 className="text-lg font-bold text-gray-800">Tableau de bord</h2>
+      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-gray-700">
+        {isMenuOpen ? (
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        ) : (
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        )}
+      </button>
+    </div>
+
+    {isMenuOpen && (
+      <aside className="md:hidden w-full bg-white shadow-lg p-4">
+        <nav className="flex flex-col gap-4">
+          {/* mêmes boutons que sidebar */}
+          <button onClick={() => { setActivePage("dashboard"); setIsMenuOpen(false); }}
             className={`w-full text-left px-4 py-2 rounded-lg transition ${
-              activePage === "dashboard" ? "bg-[#78C8CC] " : "bg-gray-200 hover:bg-gray-300"
+              activePage === "dashboard" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
             }`}>
-            Tableau de bord
+            {t("tableauBord")}
           </button>
-          <button onClick={() => setActivePage("informations")}
+          <button onClick={() => { setActivePage("informations"); setIsMenuOpen(false); }}
             className={`w-full text-left px-4 py-2 rounded-lg transition ${
-              activePage === "informations" ? "bg-[#78C8CC] "  : "bg-gray-200 hover:bg-gray-300"
+              activePage === "informations" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
             }`}>
-            Mes Informations
+            {t("mesInformations")}
           </button>
-          
-          <button onClick={() => setActivePage("categories")}
+          <button onClick={() => { setActivePage("categories"); setIsMenuOpen(false); }}
             className={`w-full text-left px-4 py-2 rounded-lg transition ${
-              activePage === "categories" ? "bg-[#78C8CC] " : "bg-gray-200 hover:bg-gray-300"
+              activePage === "categories" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
             }`}>
-            Gestion des catégories des ressources
+            {t("gestionCategories")}
           </button>
-          <button onClick={Deconnexion} className={`w-full text-left px-4 py-2 rounded-lg transition flex flex-row gap-x-4 items-center ${
+          <button onClick={() => { setActivePage("suspendreComptes"); setIsMenuOpen(false); }}
+            className={`w-full text-left px-4 py-2 rounded-lg transition ${
+              activePage === "suspendreComptes" ? "bg-[#78C8CC]" : "bg-gray-200 hover:bg-gray-300"
+            }`}>
+            Gérer la suspension des comptes
+          </button>
+          <button onClick={() => { Deconnexion(); setIsMenuOpen(false); }}
+            className={`w-full text-left px-4 py-2 rounded-lg transition flex flex-row gap-x-4 items-center ${
               activePage === "categories" ? "bg-gray-300" : "bg-gray-200 hover:bg-gray-300"
             }`}>
-            Se déconnecter
-            <img className="w-5 h-5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC8klEQVR4nO2a229
-            MURTGf41OR+La1rTjgfBGSBH/g0tVUF6KN0GfqqbvLiESFR4IfwhR8YKSqKq6jaAtIm5BxCOVkYzs5DvJykToOT2XOZN+yXlopnvt9e21116XvWEGtYsFQCdwCrgKj
-            ANfgEngF/AdeKHfzgDbgEaqBBlgD3BdypZ9fr81di+QTYKAm7QP+GCUKgE3gOPATmAF0KL/zWj1VwLbgSPATVnLG/8RKACz4yLRrm3jKfAU2Ac0BZC1ENgPPDDyXgGbi
-            RBuZS+ZCYvAJqAuJPlO1iMj/2IU1lkMjGiCn0AvUB/2JMAs4BDwQ3O5OVvDEr4UmDBmX0f0aAPGNKebe3kYlnhrVqeZ+NAM3DNkWqfjE0MSNKQ4ETfmGDIjQX3mnAQ4i
-            +RIDs1mm7kDwDdOKzKvIXm0mQPAnW6pRq/xl9iCZhSoBx6LjCOVarSLyKegVnE5011gkGRRB4yKzO4gJIoaPEzyOChdrgUlUdTfSaNRJUNpqrEtp8y2rIIoT/VgUHptT
-            aMlLI5Jt35SagkPO6TfZVJqCQ+rpONLUmoJD4uk51f+AltuRvXdIRxkJW8yKSK34yCSq9harqiqVuT+tbVqxtnTZJnO/x2/NRUQ02CZQenVMdUB1WiZJpM0zvcz0JK5T
-            /Loli4DQQa3KM64tlDShdVDEekixegQifdJXUOE1Xx4IiI9pBgFkRjza41qatCt1S2AI7LB7+CzpmWa5LGbM7cB54MIyKoFVFYj2d0uxY256tx4HZzADu6KqzcSNBrzt
-            ULOkBgPY1csMd3w18B64vGJCUNiWViC84rq3tVbn25qozhiC8axh6Pwzwbggqn2nun2NYzLUCdji4kTnmNHGvQ2qqCxhA6oIRAkAew2aUdZW8n3ETsd6xwG3lW8YrgFn
-            AB26XFAXl3zBh0Uq1UUHVUqbl9LuLSjJ6nUI6PkbaDiFcNUv5LepnRVU+40Tx3Ak8AVbb/Pcly38t+A5ypP+9W39VVPzIAU4Q+qrDvJW9hbZwAAAABJRU5ErkJggg=="
-             alt="logout-rounded-left"></img>
+            <img className="w-5 h-5" src="data:image/png;base64,...ton image..." alt="logout-rounded-left" />
+            {t("deconnexion")}
           </button>
         </nav>
       </aside>
+    )}
 
-      {/* Main content */}
-      <main className="flex-1 p-8">
-      
-        <div className="mt-8">
-          {renderContent()}
-        </div>
-      </main>
-    </div>
-    </div>
+    {/* Main content */}
+    <main className="flex-1 p-4 md:p-8">
+      <div className="mt-4 md:mt-8">
+        {renderContent()}
+      </div>
+    </main>
+
+  </div>
+</div>
+
   );
 }
-//<Link href="/uploadIconeProfil">{t('Changer sa photo de profil')}</Link>

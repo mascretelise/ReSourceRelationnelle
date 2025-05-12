@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import CompteCitoyen from '../compteCitoyen/page'
-import CompteAdmin from '../compteAdmin/page'
-import {emailUserByToken} from '@/Controller/componentsConnexion/isLogged'
-import CompteSuperAdmin from '../compteSuperAdmin/page';
+import { useEffect, useState } from "react";
+import CompteCitoyen from "../compteCitoyen/page";
+import CompteAdmin from "../compteAdmin/page";
+import { emailUserByToken } from "@/Controller/componentsConnexion/isLogged";
+import CompteSuperAdmin from "../compteSuperAdmin/page";
 
 export default function IsLoggedIn() {
   const [statut, setStatut] = useState<number>(0);
@@ -12,25 +12,26 @@ export default function IsLoggedIn() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const email = await emailUserByToken()
-        console.log("email", email)
-        const resInfos = await fetch(`http://localhost:3000/api/user/infosByEmail?email=${email}`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const email = await emailUserByToken();
+        console.log("email", email);
+        const resInfos = await fetch(
+          `${process.env.NEXT_PUBLIC_URL_API}/api/user/infosByEmail?email=${email}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const infos = await resInfos.json();
-        console.log("infos : ", infos)
-        console.log("statut : ", infos[0].uti_statut)
+        console.log("infos : ", infos);
+        console.log("statut : ", infos[0].uti_statut);
         setStatut(infos[0]?.uti_statut);
-        
-        
       } catch (err) {
         console.error("Erreur lors de la récupération du statut :", err);
-      } 
+      }
     };
     fetchData();
   }, []);
@@ -41,15 +42,15 @@ export default function IsLoggedIn() {
    return <CompteCitoyen />
   }*/
 
-   switch (statut) {
-    case  2:
-      console.log("admin")
-      return <CompteAdmin />
-    case 1: 
-        return <CompteCitoyen />
-    case 3 : 
-        return <CompteSuperAdmin />
+  switch (statut) {
+    case 2:
+      console.log("admin");
+      return <CompteAdmin />;
+    case 1:
+      return <CompteCitoyen />;
+    case 3:
+      return <CompteSuperAdmin />;
     default:
       break;
-   }
+  }
 }

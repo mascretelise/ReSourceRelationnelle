@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { emailUserByToken } from "../componentsConnexion/isLogged";
+import { useTranslations } from "next-intl";
 
 export default function UploadIcone() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const t = useTranslations("compteAdmin");
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -13,15 +14,17 @@ export default function UploadIcone() {
         for (const file of e.target.files) {
           const randomUuid = crypto.randomUUID();
           const originalName = file.name;
-          const extension = originalName.split('.').pop();
+          const extension = originalName.split(".").pop();
           const nameWithExtension = `${randomUuid}.${extension}`;
-          const nameFile = new File([file], nameWithExtension, { type: file.type });
+          const nameFile = new File([file], nameWithExtension, {
+            type: file.type,
+          });
 
           formData.append("file", nameFile);
           const url: string = nameFile.name;
           const email = await emailUserByToken();
 
-          await fetch(`http://localhost:3000/api/urlIconeProfil`, {
+          await fetch(`${process.env.NEXT_PUBLIC_URL_API}/api/urlIconeProfil`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -29,10 +32,13 @@ export default function UploadIcone() {
           });
         }
 
-        await fetch(`http://localhost:3000/api//user/iconeProfil`, {
-          method: "POST",
-          body: formData,
-        });
+        await fetch(
+          `${process.env.NEXT_PUBLIC_URL_API}/api//user/iconeProfil`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         alert("Photo de profil uploadée !");
       } catch (error) {
@@ -59,7 +65,7 @@ export default function UploadIcone() {
         onClick={handleButtonClick}
         className="text-left px- py-1 rounded-lg"
       >
-        Choisir une photo de profil
+        {t("uploadIcone")}
       </button>
     </div>
   );
