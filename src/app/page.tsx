@@ -63,12 +63,12 @@ const Page = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           res_nom: file.name,
-          res_categorie: "Catégorie", // À adapter selon la catégorie réelle
+          res_categorie: "Catégorie",
           com_commentaire: commentaire,
-          res_extension: file.name.split('.').pop() || '', // Extension du fichier
-          res_auteur: "johndoe@example.com", // À remplacer par l'email de l'utilisateur actuel
+          res_extension: file.name.split('.').pop() || '', 
+          res_auteur: "johndoe@example.com", 
           res_lien: fichierUrl,
-          res_description: "Description de la ressource", // À adapter si besoin
+          res_description: "Description de la ressource",
         }),
       });
 
